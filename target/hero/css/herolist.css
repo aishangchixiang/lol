@@ -1,0 +1,38 @@
+#mid{
+	margin-top: 20px;
+}
+
+.top{
+	background-color: lightgray;
+	text-align: center;
+	font-size: 50px;
+}
+
+#select_catgory{
+	margin-top: 40px;
+}
+#search{
+	margin-left: 40%;
+}
+
+#row_heros{
+	margin-top: 40px;
+}
+
+.col-md-2{
+	background-color: #00A483;
+	height: 200px;
+	border: 2px solid red;
+}
+
+#hero{
+	width: 100%;
+
+}
+#hero-text{
+	border: 2px solid blue;
+	text-align: center;
+	margin-top: 5px;
+	font-size: 20px;
+}
+

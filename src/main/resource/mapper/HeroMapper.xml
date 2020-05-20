@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.test.dao.HeroDao">
+    <!--定义联合查询resultmap-->
+    <resultMap id="WithCategoryResultMap" type="com.test.model.Hero">
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="hname" property="hname" jdbcType="VARCHAR" />
+        <result column="hnick" property="hnick" jdbcType="CHAR" />
+        <result column="hprice" property="hprice" jdbcType="VARCHAR" />
+        <result column="hstory" property="hstory" jdbcType="INTEGER" />
+        <result column="cid" property="cid" jdbcType="INTEGER" />
+        <association property="category" javaType="com.test.model.Category">
+            <id column="id" property="id" jdbcType="INTEGER" />
+            <result column="cname" property="cname" jdbcType="VARCHAR" />
+        </association>
+    </resultMap>
+
+    <!--查询所有英雄及其类型-->
+    <select id="getList" parameterType="com.test.model.Hero" resultMap="WithCategoryResultMap">
+        SELECT hero.id,hero.hname,hero.hnick,hero.hprice,hero.hstory,hero.cid,category.cname FROM hero left join category on hero.cid=category.id
+     </select>
+    <!--根据英雄id查英雄-->
+    <select id="getHeroById" parameterType="java.lang.Integer" resultType="com.test.model.Hero">
+        SELECT * FROM hero where id=#{id} for update
+     </select>
+    <!--根据名字查英雄-->
+    <select id="getHeroByName" parameterType="com.test.model.Hero" resultType="com.test.model.Hero">
+        SELECT * FROM hero where hname=#{hname} for update
+     </select>
+    <!--添加英雄-->
+    <insert id="insertHero" parameterType="com.test.model.Hero">
+        insert into hero(id,hname,hnick,hprice,hstory,cid) values(#{id},#{hname},#{hnick},#{hprice},#{hstory},#{cid})
+    </insert>
+    <!--删除英雄-->
+    <delete id="deleteHeroById" parameterType="com.test.model.Hero" >
+        delete from hero where id = #{id}
+    </delete>
+    <!--改英雄-->
+    <update id="updateById" parameterType="com.test.model.Hero">
+        UPDATE hero SET hname = #{hname}, hnick = #{hnick}, hprice=#{hprice}, hstory = #{hstory}, cid=#{cid} WHERE  id = #{id}
+    </update>
+    <!--查询所有英雄数量-->
+    <select id="getCount" resultType="java.lang.Integer">
+        select count(id) from hero
+    </select>
+</mapper>
